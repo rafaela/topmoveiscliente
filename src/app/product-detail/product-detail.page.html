@@ -1,0 +1,137 @@
+<ion-menu contentId="main-content">
+    <ion-header>
+        <ion-toolbar>
+            <ion-title (click)="customer(0)">{{name}}</ion-title>
+        </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+        
+        <ion-list class="list" id="sidenav" *ngFor="let category of categories; let index = index">
+            <ion-item >
+                <span  (click)="produtosCategoria(category)">{{category.name}}</span>
+                <ion-icon (click)="menuItemHandler(index)" *ngIf="category.subcategories.length > 0" name="chevron-down-outline" class="right"></ion-icon>
+            </ion-item>
+              
+            <div *ngIf="category.show">
+                <div *ngFor="let sub of category.subcategories">
+                    <ion-item  (click)="produtosSubcategoria(sub)" submenu-item *ngIf="category.show"> {{sub.name}}</ion-item>
+                </div>
+            </div>
+        </ion-list>
+  
+    </ion-content>
+  </ion-menu>
+<div class="ion-page" id="main-content" style="margin-bottom: 15px;">
+    <ion-header>
+        <ion-toolbar>
+
+            <ion-buttons slot="start">
+                <ion-menu-button></ion-menu-button>
+            </ion-buttons>
+            <ion-title (click)="home()" style="cursor: pointer;">
+                <img src="../../../assets/images/logo.png" style="width: 125px;">
+            </ion-title>
+
+            <ion-buttons slot="secondary" >
+                <ion-row>
+                    <ion-col>
+                        <ion-button (click)="presentPopover($event)">
+                            <ion-icon class="icon-navbar" slot="icon-only" name="person-circle"></ion-icon>
+                        </ion-button>
+                    </ion-col>
+
+                    <ion-col>
+                        <ion-button style="margin-right: 15px;" (click)="viewCart()">
+                            <ion-icon class="icon-navbar" slot="icon-only" name="cart-outline"></ion-icon>
+                            <ion-badge  *ngIf="amountProducts > 0" color="primary">{{amountProducts}}</ion-badge>
+                        </ion-button>
+                    </ion-col>
+                </ion-row>
+                <!-- <ion-searchbar placeholder="Buscar produtos" style="width: 600px;"></ion-searchbar> -->
+                
+
+                
+            </ion-buttons>
+            
+        </ion-toolbar>
+    </ion-header>
+
+
+    
+
+    <ion-content class="ion-padding " *ngIf="product">
+
+        
+
+        <ion-row>
+            <ion-col sizeLg="6" sizeMd="6" sizeXs="12" style="height: 500px;">
+
+                <p class="title">{{product.name}}</p>
+                <p class="value">{{product.value | formatNumber:'currency'}}</p>
+                <ion-content class="slides">   
+                    <swiper-container *ngFor="let photo of product.photos" wiper-container [loop]="true" [pagination]="true">
+                        <swiper-slide>
+                            <img class="images" alt="{{photo.urlImage}}" src="{{photo.urlImage}}" />
+                        </swiper-slide>
+                    </swiper-container>
+                </ion-content>
+            </ion-col>
+
+            <ion-col sizeLg="6" sizeMd="6" sizeXs="12" class="descricao">
+
+                <p class="description font">Descrição do produto</p>
+
+                <p class="subtitle font" *ngFor="let sub of product.subcategoriesProducts">{{sub.name}}</p>
+
+                <p class="subtitle font">{{product.description}}</p>
+
+
+                <p class="description font">Formas de Pagamento</p>
+
+                <div *ngFor="let pay of payments">
+                    <p class="subtitle font" style="font-size: 15px;" >{{pay.name}}: 
+                        <span *ngIf="pay.methods == 1 && pay.discount == null">{{product.value | formatNumber:'currency'}}</span>
+
+                        <span *ngIf="pay.methods == 2 && pay.discount == null">{{product.value | formatNumber:'currency'}}</span>
+
+                        <span *ngIf="pay.methods == 3 && pay.discount != null">{{product.value - ((pay.discount/100) * product.value) | formatNumber:'currency'}}</span>
+                        <span *ngIf="pay.methods == 3 && pay.discount == null">{{product.value | formatNumber:'currency'}}</span>
+
+                        <span *ngIf="pay.methods == 4 && pay.discount != null">{{product.value - ((pay.discount/100) * product.value) | formatNumber:'currency'}}</span>
+                        <span *ngIf="pay.methods == 4 && pay.discount == null">{{product.value | formatNumber:'currency'}}</span>
+
+                        <span *ngIf="pay.methods == 5 && pay.fees != null">{{product.value + ((pay.fees/100) * product.value) | formatNumber:'currency'}} em até 
+                            {{pay.quantityInstallments}} de {{(product.value + ((pay.fees/100) * product.value))  / pay.quantityInstallments  | formatNumber:'currency'}}</span>
+                        <span *ngIf="pay.methods == 5 && pay.fees == null">
+                            {{product.value | formatNumber:'currency'}} em até   {{pay.quantityInstallments}} de {{product.value / pay.quantityInstallments  | formatNumber:'currency'}}</span>
+                    </p>
+                    
+                </div >
+                
+
+
+                <p>
+                    <ion-button class="font" expand="block" shape="round" (click)="comprarAgora(product)">
+                        <ion-icon name="bag-check-outline"  style="margin-right: 5px;"></ion-icon>
+                        Comprar agora</ion-button>
+                </p>
+                
+                <p>
+                    
+                    <ion-button class="font" expand="block" shape="round" (click)="adicionarCarrinho(product)">
+                        <ion-icon name="cart-outline" style="margin-right: 5px;"></ion-icon>
+                        Adicionar ao carrinho</ion-button>
+                </p>
+            </ion-col>
+        </ion-row>
+       
+
+        
+
+       
+    </ion-content>
+
+    
+
+    
+</div>

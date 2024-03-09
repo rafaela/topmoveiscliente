@@ -1,0 +1,82 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-button class="address-registration" (click)="cancel()">Cancelar</ion-button>
+        </ion-buttons>
+        <ion-title class="address-registration">Endereço</ion-title>
+        <ion-buttons slot="end">
+            <ion-button class="address-registration" (click)="salvar() " [strong]="true">Confirmar</ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+
+    <ion-row>
+
+        <ion-col sizeLg="6" sizeMd="6" sizeXs="12">
+            <ion-label class="color-label">CEP</ion-label>
+            <ion-input [clearInput]="true" placeholder="Informe o cep" name="input" maxlength="8"
+                [(ngModel)]="address.cep"  [appIonMask]="inputMasks.cep"></ion-input>
+        </ion-col>
+
+        <ion-col sizeLg="3" sizeMd="4">
+            <ion-button (click)="validaCep(address.cep)" expand="block">Buscar CEP</ion-button>
+          </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col sizeLg="6" sizeMd="6" sizeXs="12">
+            <ion-label class="color-label">Rua</ion-label>
+            <ion-input [disabled]="!buscaCEP" [clearInput]="true" placeholder="Informe a rua" name="input"
+                [(ngModel)]="address.street"></ion-input>
+        </ion-col>
+
+        <ion-col sizeLg="6" sizeMd="6" sizeXs="12">
+            <ion-label class="color-label">Número</ion-label>
+            <ion-input [disabled]="!buscaCEP" [clearInput]="true" placeholder="Informe o número" name="input"
+                [(ngModel)]="address.number"></ion-input>
+        </ion-col>
+    </ion-row>
+
+    <ion-row>
+        <ion-col sizeLg="6" sizeMd="6" sizeXs="12">
+            <ion-label class="color-label">Complemento</ion-label>
+            <ion-input [disabled]="!buscaCEP" [clearInput]="true" placeholder="Informe o complemento" name="input"
+                [(ngModel)]="address.complement"></ion-input>
+        </ion-col>
+
+        <ion-col sizeLg="6" sizeMd="6" sizeXs="12">
+            <ion-label class="color-label">Bairro</ion-label>
+            <ion-input [disabled]="!buscaCEP" [clearInput]="true" placeholder="Informe o baiiro" name="input"
+                [(ngModel)]="address.neighborhood"></ion-input>
+        </ion-col>
+    </ion-row>
+
+    <ion-row>
+        <ion-col sizeLg="6" sizeMd="6" sizeXs="12">
+            <ion-label class="color-label">Referência</ion-label>
+            <ion-input [disabled]="!buscaCEP" [clearInput]="true" placeholder="Informe uma referência" name="input"
+                [(ngModel)]="address.reference"></ion-input>
+        </ion-col>
+
+        <ion-col sizeLg="6" sizeMd="6" sizeXs="12">
+            <ion-label class="color-label">Cidade</ion-label>
+            <ion-input [disabled]="!buscaCEP" [clearInput]="true" placeholder="Informe a cidade" name="input"
+                [(ngModel)]="address.city"></ion-input>
+        </ion-col>
+
+        
+    </ion-row>
+
+
+    <ion-row>
+        <ion-col sizeLg="6" sizeMd="6" sizeXs="12">
+            <ion-label class="color-label">Estado</ion-label>
+            <ion-input [disabled]="!buscaCEP" [clearInput]="true" placeholder="Informe o Estado" name="input"
+                [(ngModel)]="address.state"></ion-input>
+        </ion-col>
+
+    </ion-row>
+
+    
+
+</ion-content>

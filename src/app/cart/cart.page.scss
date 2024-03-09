@@ -1,0 +1,43 @@
+.description{
+    color: var(--primary);
+    font-size: 22px;
+    font-family: 'Lato', sans-serif;
+}
+
+
+.listProducts{
+    width: 50%;
+}
+
+.valueCart{
+    color: var(--primary);
+    font-size: 16px;
+}
+
+.imageCart{
+    width: 100px;
+    border-radius: 100px;
+}
+
+.lineCart{
+    box-shadow: 2px 2px 2px #E0E0E0;
+}
+
+.colImage{
+    margin-top: 20px;
+}
+
+.inputNumber{
+    //--color: var(--primary);
+}
+
+.margin{
+    margin: 0;
+}
+
+
+@media (max-width:767px){
+    .listProducts{
+        width: 100%;
+    }
+}

@@ -1,0 +1,61 @@
+
+<div class="ion-page" id="main-content" style="margin-bottom: 15px;">
+    <ion-header>
+        <ion-toolbar>
+
+            <ion-buttons slot="start">
+                <ion-menu-button></ion-menu-button>
+            </ion-buttons>
+            <ion-title (click)="home()" style="cursor: pointer;">
+                <img src="../../../assets/images/logo.png" style="width: 125px;">
+            </ion-title>
+            
+        </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="ion-padding ">
+
+        <ion-grid>
+            <ion-row >
+                <ion-col>
+                    <ion-row>
+                        <ion-col  sizeLg="4" sizeMd="4" sizeXs="12">
+                            <ion-label class="color-label">Email</ion-label>
+                            <ion-input [clearInput]="true" type="email" placeholder="Digite seu usuário" name="input" [(ngModel)]="login.email"></ion-input>
+                          </ion-col>
+                    </ion-row>
+    
+                    <ion-row>
+                        <ion-col  sizeLg="4" sizeMd="4" sizeXs="12">
+                            <ion-label class="color-label">Senha</ion-label>
+                            <ion-input [clearInput]="true" type="password" placeholder="Digite seu nome completo" name="input" [(ngModel)]="login.passwordHash"></ion-input>
+                          </ion-col>
+                    </ion-row>
+    
+                    <ion-row >
+                        <ion-col>
+                          <button class="btn-salvar" (click)="entrar()">Entrar</button>
+                        </ion-col>
+                      </ion-row>
+
+
+                    <ion-row *ngIf="erro">
+                        <ion-col>
+                            <p class="font color-primary" style="font-weight: 700;">Usuário ou senha incorretos</p>
+                        </ion-col>
+                    </ion-row>
+    
+                    <ion-row>
+                        <ion-col style="cursor: pointer;">
+                            <p class="font color-primary"  (click)="criarConta()">Criar conta</p>
+                        </ion-col>
+                    </ion-row>
+    
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+        
+
+    </ion-content>
+
+</div>

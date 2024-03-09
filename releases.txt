@@ -1,0 +1,8 @@
+#Criar slides de tela inicial
+https://ionicacademy.com/swiper-ionic-7-ion-slides/
+
+#Para mascaras
+https://www.npmjs.com/package/text-mask-core
+
+#Grid
+https://www.positronx.io/ionic-angular-responsive-grid-tutorial-with-examples/

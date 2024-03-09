@@ -1,0 +1,31 @@
+.color-label{
+    color: var(--line);
+}
+
+.create{
+    width: 80%;
+    justify-content: center;
+}
+
+ion-button{
+    font-family: 'Lato', sans-serif;
+}
+
+.address-registration{
+    font-family: 'Lato', sans-serif;
+}
+
+.list-address{
+    border: 1px solid var(--line);
+}
+
+.col-icon-list{
+    text-align: end;
+    
+}
+
+.icon-list{
+    margin: 5px 5px 0 5px;
+    color: var(--primary);
+    cursor: pointer;
+}
