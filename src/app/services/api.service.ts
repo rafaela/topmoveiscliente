@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { environment } from 'src/environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import { IntlMaskProperties } from '../directives/intl-mask/intl-mask.directive';
 
 @Injectable({
@@ -35,8 +35,7 @@ export class ApiService {
   }
 
   logout(){
-    window.localStorage.clear();
-    this.router.navigate(['home']);
+    localStorage.clear();
   }
 
   //CRUD DE CATEGORIAS
@@ -133,5 +132,8 @@ export class ApiService {
     return this.http.get(this.apiUrl + '/frete/0', id);
   }
   
+  getProductsSearch(data: any) : Observable<any>{
+    return this.http.post(this.apiUrl + '/produtos', data);
+  }
 
 }

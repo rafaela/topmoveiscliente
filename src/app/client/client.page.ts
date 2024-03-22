@@ -28,10 +28,17 @@ export class ClientPage implements OnInit {
     cep: cepValidation.mask
   };
 
-  public client: any = { login: {passwordHash: '', login: ''}};
+  public client: any = { 
+    name: '',
+    cpf: '',
+    phone: '',
+    birthDate: '',
+    email: '',
+    login: {passwordHash: '', login: ''}
+  };
   public addresses: any = [];
   categories: any = [];
-  name: string = 'Nome'
+  name: string = ''
   error: string = '';
   isToastOpen = false;
   id: string = ''//'3BF04AB9-CC4A-4E6C-531B-08DBF0394A90'
@@ -46,9 +53,12 @@ export class ClientPage implements OnInit {
   ngOnInit() {
     this.getDataCategories();
     this.cart = JSON.parse(localStorage.getItem("cart"));
-    this.client =  JSON.parse(localStorage.getItem("cliente"));
-    this.name = this.client != null && this.client.name != null ? this.client.name : '';
-    this.id = this.client.id;
+    if(JSON.parse(localStorage.getItem("cliente"))){
+      this.client = JSON.parse(localStorage.getItem("cliente"))
+      this.name = (this.client.name != null) ? this.client.name : '';
+      this.id = (this.client.name != null) ? this.client.id : '';
+      this.getData();
+    }
     if(this.cart){
       this.cart.forEach((element: any)  => {
         this.amountProducts += element.amount;
@@ -57,7 +67,7 @@ export class ClientPage implements OnInit {
     if(this.id){
       this.isEdit = true;
     }
-    this.getData();
+    
     
   }
 
@@ -134,7 +144,24 @@ export class ClientPage implements OnInit {
   }
 
   cancelar(){
-    this.router.navigateByUrl('home', { replaceUrl: true });
+    if(!this.isEdit){
+      this.router.navigateByUrl('login', { replaceUrl: true });
+    }
+    else{
+      if(localStorage.getItem("tela") == "cliente"){
+        this.router.navigateByUrl('home',  { replaceUrl: true })
+      }
+      else if(localStorage.getItem("tela") == "carrinho"){
+        this.router.navigateByUrl('carrinho',  { replaceUrl: true })
+      }
+      else if(localStorage.getItem("tela") == "meuspedidos"){
+        this.router.navigateByUrl('meuspedidos',  { replaceUrl: true })
+      }
+      else{
+        this.router.navigateByUrl('home',  { replaceUrl: true })
+      }
+    }
+    
   }
 
   validar(){
@@ -238,9 +265,26 @@ export class ClientPage implements OnInit {
         }
         else{
           this.client = data.data
+          if(!this.isEdit){
+            this.isEdit = true;
+            this.openModal()
+          }
+
+          if(localStorage.getItem("tela") == "cliente"){
+            this.router.navigateByUrl('home',  { replaceUrl: true })
+          }
+          else if(localStorage.getItem("tela") == "carrinho"){
+            this.router.navigateByUrl('carrinho',  { replaceUrl: true })
+          }
+          else if(localStorage.getItem("tela") == "meuspedidos"){
+            this.router.navigateByUrl('meuspedidos',  { replaceUrl: true })
+          }
+          else{
+            this.router.navigateByUrl('home',  { replaceUrl: true })
+          }
         }
-        
       });
+      
     }
   }
 

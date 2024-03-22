@@ -27,8 +27,11 @@
         <ion-buttons slot="start">
             <ion-menu-button></ion-menu-button>
         </ion-buttons>
+        <ion-title (click)="home()" style="cursor: pointer;">
+            <img src="../../../assets/images/logo.png" style="width: 125px;">
+        </ion-title>
 
-        <ion-buttons slot="secondary" >
+        <ion-buttons slot="end" >
             <ion-row>
                 <ion-col>
                     <ion-button (click)="presentPopover($event)" >
@@ -45,28 +48,38 @@
             </ion-row>
             <!-- <ion-searchbar placeholder="Buscar produtos" style="width: 600px;"></ion-searchbar> -->
             
-
-            
         </ion-buttons>
 
-        <ion-title style="cursor: pointer;">
-            <img src="../../../assets/images/logo.png" style="width: 125px;">
-        </ion-title>
+        
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
-        <ion-content>
-            <swiper-container wiper-container [loop]="true" [pagination]="true">
-                <swiper-slide *ngFor="let high of highligths">
+
+        <ion-row>
+            <ion-col class="colBusca">
+                <input type="text" class="buscaProdutos font" [(ngModel)]="data.data.Name" placeholder="Informe o nome do produto..." name="busca">
+                <ion-button (click)="buscaProdutos()"class="btnBusca"><ion-icon (click)="buscaProdutos()"  name="search-outline"></ion-icon></ion-button>
+            </ion-col>
+        </ion-row>
+
+        <ion-content *ngIf="highligths.length > 0">
+            <swiper-container [modules]="swiperModule" [autoPlay]="true" [loop]="true" [pagination]="true" navigation="true">
+                <swiper-slide class="swiperSlide" *ngFor="let high of highligths">
                     <img src="{{high.image}}" alt="{{high.name}}">
                 </swiper-slide>
                 
             </swiper-container>
         </ion-content>
 
+        
+
         <ion-row>
             <ion-col *ngFor="let product of products">
                 <app-card-product imageProduct="{{product.photos[0].urlImage}}" (click)="openProduct(product.id)" nameProduct="{{product.name}}" valueProduct="{{product.value | formatNumber:'currency'}}" ></app-card-product>
+            </ion-col>
+
+            <ion-col *ngIf="products.length == 0">
+                <p class="font">Produto não encontrado!</p>
             </ion-col>
         </ion-row>
             

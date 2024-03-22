@@ -60,25 +60,33 @@ export class AddressComponent {
   }
 
   async validaCep(cep: string){
-    const loading = await this.loadingCtrl.create({
-      message: 'Aguarde...',
-    });
-    loading.present();
-    let url = 'https://viacep.com.br/ws/' + cep + '/json/'
-    this.http.get(url).subscribe((result: any) => {
-        loading.dismiss();
-        if(result.erro){
-          this.alert("CEP", "CEP não encontrado")
-          this.buscaCEP = false;
-        }
-        else{
-          this.buscaCEP = true;
-          this.address.street = result.logradouro;
-          this.address.neighborhood = result.bairro;
-          this.address.city = result.localidade;
-          this.address.state = result.uf;
-        }
-    });
+
+    if(cep.length < 8){
+      this.alert('CEP incorreto','O CEP possui 8 dígitos')
+      cep = '';
+    }
+    else{
+      const loading = await this.loadingCtrl.create({
+        message: 'Aguarde...',
+      });
+      loading.present();
+      let url = 'https://viacep.com.br/ws/' + cep + '/json/'
+      this.http.get(url).subscribe((result: any) => {
+          loading.dismiss();
+          if(result.erro){
+            this.alert("CEP", "CEP não encontrado")
+            this.buscaCEP = false;
+          }
+          else{
+            this.buscaCEP = true;
+            this.address.street = result.logradouro;
+            this.address.neighborhood = result.bairro;
+            this.address.city = result.localidade;
+            this.address.state = result.uf;
+          }
+      });
+    }
+    
   }
 
   async alert(titulo: string, message: string){

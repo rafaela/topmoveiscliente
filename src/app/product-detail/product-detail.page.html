@@ -32,7 +32,7 @@
                 <img src="../../../assets/images/logo.png" style="width: 125px;">
             </ion-title>
 
-            <ion-buttons slot="secondary" >
+            <ion-buttons slot="end" >
                 <ion-row>
                     <ion-col>
                         <ion-button (click)="presentPopover($event)">
@@ -61,16 +61,21 @@
 
     <ion-content class="ion-padding " *ngIf="product">
 
-        
-
         <ion-row>
+            <ion-col class="colBusca">
+                <input type="text" class="buscaProdutos font" [(ngModel)]="data.data.Name" placeholder="Informe o nome do produto..." name="busca">
+                <ion-button (click)="buscaProdutos()"class="btnBusca"><ion-icon (click)="buscaProdutos()"  name="search-outline"></ion-icon></ion-button>
+            </ion-col>
+        </ion-row>
+
+        <ion-row *ngIf="products.length == 0">
             <ion-col sizeLg="6" sizeMd="6" sizeXs="12" style="height: 500px;">
 
                 <p class="title">{{product.name}}</p>
                 <p class="value">{{product.value | formatNumber:'currency'}}</p>
                 <ion-content class="slides">   
-                    <swiper-container *ngFor="let photo of product.photos" wiper-container [loop]="true" [pagination]="true">
-                        <swiper-slide>
+                    <swiper-container  wiper-container [loop]="true" [pagination]="true" navigation="true">
+                        <swiper-slide *ngFor="let photo of product.photos">
                             <img class="images" alt="{{photo.urlImage}}" src="{{photo.urlImage}}" />
                         </swiper-slide>
                     </swiper-container>
@@ -122,6 +127,18 @@
                         <ion-icon name="cart-outline" style="margin-right: 5px;"></ion-icon>
                         Adicionar ao carrinho</ion-button>
                 </p>
+            </ion-col>
+        </ion-row>
+
+        <ion-row *ngIf="products.length > 0">
+            <ion-col *ngFor="let product of products">
+                <ion-card (click)="openProduct(product.id)">
+                    <img class="imagescard" alt="{{product.name}}" src="{{product.photos[0].urlImage}}" />
+                    <ion-card-header>
+                      <ion-card-title>{{product.name}}</ion-card-title>
+                      <ion-card-subtitle class="valuecard">{{product.value | formatNumber:'currency'}}</ion-card-subtitle>
+                    </ion-card-header>
+                  </ion-card>
             </ion-col>
         </ion-row>
        

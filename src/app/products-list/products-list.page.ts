@@ -19,6 +19,19 @@ export class ProductsListPage implements OnInit {
   id: any;
   products: any = [];
 
+  data: any = {
+    data: {
+      name: '',
+      inactive: false,
+      FeaturedProduct: false,
+
+    },
+    skip: 0,
+    take: 0,
+  };
+
+
+
   constructor(public api: ApiService, private loadingCtrl: LoadingController, private router: Router, 
     private activatedRoute: ActivatedRoute, public popoverController: PopoverController,) { }
 
@@ -33,6 +46,25 @@ export class ProductsListPage implements OnInit {
     }
     this.client =  JSON.parse(localStorage.getItem("cliente"));
     this.name = this.client != null && this.client.name != null ? this.client.name : '';
+    
+  }
+
+  async buscaProdutos(){
+    const loading = await this.loadingCtrl.create({
+      message: 'Aguarde...',
+    });
+    loading.present();
+    if(this.data.data.Name){
+      
+      this.api.getProductsSearch(this.data).subscribe(data => {
+        loading.dismiss();
+        this.products = data.data;
+      })
+    }
+    else{
+      loading.dismiss();
+      this.buscaCategoriaOuSubcategoria();
+    }
     
   }
 

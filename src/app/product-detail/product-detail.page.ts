@@ -23,6 +23,18 @@ export class ProductDetailPage implements OnInit {
   popover: any;
   client: any = {};
   name: string = "Nome";
+  products: any = [];
+
+  data: any = {
+    data: {
+      name: '',
+      inactive: false,
+      FeaturedProduct: false,
+
+    },
+    skip: 0,
+    take: 0,
+  };
 
 
   constructor(public api: ApiService, private loadingCtrl: LoadingController, 
@@ -52,9 +64,31 @@ export class ProductDetailPage implements OnInit {
     
   }
 
+  async buscaProdutos(){
+    const loading = await this.loadingCtrl.create({
+      message: 'Aguarde...',
+    });
+    loading.present();
+    if(this.data.data.Name){
+      
+      this.api.getProductsSearch(this.data).subscribe(data => {
+        loading.dismiss();
+        this.products = data.data;
+      })
+    }
+    else{
+      loading.dismiss();
+      this.products = [];
+      this.detalhesProduto();
+    }
+  } 
+
   async filtrar(){
     this.getDataCategories();
+    this.detalhesProduto();
+  }
 
+  async detalhesProduto(){
     const loading = await this.loadingCtrl.create({
       message: 'Aguarde...',
     });
@@ -69,6 +103,10 @@ export class ProductDetailPage implements OnInit {
 
       
     });
+  }
+
+  openProduct(id: any){
+    this.router.navigateByUrl('detalhe/' + id, { replaceUrl: true })
   }
 
   menuItemHandler(show: any): void {

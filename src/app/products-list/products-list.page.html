@@ -19,39 +19,50 @@
           </div>
       </ion-list>
 
+      
+
   </ion-content>
 </ion-menu>
 
 <div class="ion-page" id="main-content">
   <ion-header>
     <ion-toolbar>
-      <ion-buttons slot="start">
-          <ion-menu-button></ion-menu-button>
-      </ion-buttons>
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
 
-      <ion-buttons slot="secondary" >
-          <ion-row>
-              <ion-col>
-                  <ion-button (click)="presentPopover($event)" >
-                      <ion-icon class="icon-navbar" slot="icon-only" name="person-circle"></ion-icon>
-                  </ion-button>
-              </ion-col>
+        <ion-buttons slot="end" >
+            <ion-row>
+                <ion-col>
+                    <ion-button (click)="presentPopover($event)" >
+                        <ion-icon class="icon-navbar" slot="icon-only" name="person-circle"></ion-icon>
+                    </ion-button>
+                </ion-col>
 
-              <ion-col>
-                  <ion-button style="margin-right: 15px;" (click)="viewCart()">
-                      <ion-icon class="icon-navbar" slot="icon-only" name="cart-outline"></ion-icon>
-                      <ion-badge  *ngIf="amountProducts > 0" color="primary">{{amountProducts}}</ion-badge>
-                  </ion-button>
-              </ion-col>
-          </ion-row>
-      </ion-buttons>
+                <ion-col>
+                    <ion-button style="margin-right: 15px;" (click)="viewCart()">
+                        <ion-icon class="icon-navbar" slot="icon-only" name="cart-outline"></ion-icon>
+                        <ion-badge  *ngIf="amountProducts > 0" color="primary">{{amountProducts}}</ion-badge>
+                    </ion-button>
+                </ion-col>
+            </ion-row>
+        </ion-buttons>
 
-      <ion-title (click)="home()" style="cursor: pointer;">
-          <img src="../../../assets/images/logo.png" style="width: 125px;">
-      </ion-title>
+        <ion-title (click)="home()" style="cursor: pointer;">
+            <img src="../../../assets/images/logo.png" style="width: 125px;">
+        </ion-title>
     </ion-toolbar>
   </ion-header>
   <ion-content class="ion-padding">
+
+    <ion-row>
+        <ion-col class="colBusca">
+            <input type="text" class="buscaProdutos font" [(ngModel)]="data.data.Name" placeholder="Informe o nome do produto..." name="busca">
+            <ion-button (click)="buscaProdutos()"class="btnBusca"><ion-icon (click)="buscaProdutos()"  name="search-outline"></ion-icon></ion-button>
+        </ion-col>
+    </ion-row>
+
+
     <ion-row>
         <ion-col *ngFor="let product of products">
             <ion-card (click)="openProduct(product.id)">
@@ -61,6 +72,10 @@
                   <ion-card-subtitle class="value">{{product.value | formatNumber:'currency'}}</ion-card-subtitle>
                 </ion-card-header>
               </ion-card>
+        </ion-col>
+
+        <ion-col *ngIf="products.length == 0"  class="descricao">
+            <p class="font">Produtos não encontrado!</p>
         </ion-col>
     </ion-row>
   </ion-content>

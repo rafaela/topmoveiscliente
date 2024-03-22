@@ -27,23 +27,23 @@
   <ion-header>
     <ion-toolbar>
 
-      <ion-buttons slot="start">
+      <ion-buttons *ngIf="isEdit" slot="start">
           <ion-menu-button></ion-menu-button>
       </ion-buttons>
       <ion-title (click)="home()" style="cursor: pointer;">
           <img src="../../../assets/images/logo.png" style="width: 125px;">
       </ion-title>
 
-      <ion-buttons slot="secondary" >
+      <ion-buttons slot="end" >
           <ion-row>
-              <ion-col>
-                  <ion-button (click)="presentPopover($event)">
+              <ion-col *ngIf="isEdit">
+                  <ion-button  (click)="presentPopover($event)">
                       <ion-icon class="icon-navbar" slot="icon-only" name="person-circle"></ion-icon>
                   </ion-button>
               </ion-col>
 
-              <ion-col>
-                  <ion-button style="margin-right: 15px;" (click)="viewCart()">
+              <ion-col *ngIf="isEdit">
+                  <ion-button   style="margin-right: 15px;" (click)="viewCart()">
                       <ion-icon class="icon-navbar" slot="icon-only" name="cart-outline"></ion-icon>
                       <ion-badge  *ngIf="amountProducts > 0" color="primary">{{amountProducts}}</ion-badge>
                   </ion-button>
@@ -109,7 +109,7 @@
         </ion-col>
       </ion-row>
   
-      <ion-row>
+      <ion-row *ngIf="isEdit">
         <ion-col sizeLg="3" sizeMd="4">
           <ion-button (click)="openModal()" expand="block">Cadastro de endereço</ion-button>
         </ion-col>

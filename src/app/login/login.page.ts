@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../services/api.service';
-import { AlertController, LoadingController } from '@ionic/angular';
+import { AlertController, LoadingController, ToastController } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -21,7 +21,8 @@ export class LoginPage implements OnInit {
   erro: boolean = false;
 
   constructor(public api: ApiService, private loadingCtrl: LoadingController, 
-        private activatedRoute: ActivatedRoute, private router: Router, private alertController: AlertController) {
+        private activatedRoute: ActivatedRoute, private router: Router, private alertController: AlertController,
+        private toastController: ToastController) {
   }
 
   ngOnInit() {
@@ -38,29 +39,47 @@ export class LoginPage implements OnInit {
   }
 
   async entrar(){
-    const loading = await this.loadingCtrl.create({
-      message: 'Aguarde...',
-    });
-    loading.present();
-    let resultado = await this.api.login(this.login);
-    if(resultado){
-      loading.dismiss();
-      if(localStorage.getItem("tela") == "cliente"){
-        this.router.navigateByUrl('cliente',  { replaceUrl: true })
-      }
-      else if(localStorage.getItem("tela") == "carrinho"){
-        this.router.navigateByUrl('carrinho',  { replaceUrl: true })
-      }
-      else{
-        this.router.navigateByUrl('meuspedidos',  { replaceUrl: true })
-      }
+
+    if(this.login.email == ''){
+      const toast = await this.toastController.create({
+        message: 'Informe o email',
+        duration: 1500,
+        position: 'bottom',
+      });
+      await toast.present();
+    }
+    if(this.login.passwordHash == ''){
+      const toast = await this.toastController.create({
+        message: 'Informe a senha',
+        duration: 1500,
+        position: 'bottom',
+      });
+      await toast.present();
     }
     else{
-      loading.dismiss();
-      this.erro = true;
+      const loading = await this.loadingCtrl.create({
+        message: 'Aguarde...',
+      });
+      loading.present();
+      let resultado = await this.api.login(this.login);
+      if(resultado){
+        loading.dismiss();
+        if(localStorage.getItem("tela") == "cliente"){
+          this.router.navigateByUrl('cliente',  { replaceUrl: true })
+        }
+        else if(localStorage.getItem("tela") == "carrinho"){
+          this.router.navigateByUrl('carrinho',  { replaceUrl: true })
+        }
+        else{
+          this.router.navigateByUrl('meuspedidos',  { replaceUrl: true })
+        }
+      }
+      else{
+        loading.dismiss();
+        this.erro = true;
+      }
+        
     }
-      
-      
   }
 
   criarConta(){

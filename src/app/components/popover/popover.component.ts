@@ -30,8 +30,17 @@ export class PopoverComponent  implements OnInit {
   }
 
   logout(){
-    this.popoverController.dismiss();
-    this.api.logout();
+    let login = localStorage.getItem("cliente");
+    if(login != null){
+      this.popoverController.dismiss();
+      this.api.logout();
+      this.router.navigateByUrl('home',  { replaceUrl: true })
+    }
+    else{
+      this.popoverController.dismiss();
+      this.router.navigateByUrl('home',  { replaceUrl: true })
+    }
+    
   }
 
   async myRequests(){

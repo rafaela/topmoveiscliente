@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../services/api.service';
-import { LoadingController, PopoverController } from '@ionic/angular';
+import { IonicSlides, LoadingController, PopoverController } from '@ionic/angular';
 import { register } from 'swiper/element/bundle';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PopoverComponent } from '../components/popover/popover.component';
 import { CepService } from '../services/cep.service';
+import Swiper from 'swiper';
 register()
 
 @Component({
@@ -22,28 +23,62 @@ export class HomePage implements OnInit{
   amountProducts = 0;
   popover: any;
   client: any = {};
+  busca: string = '';
+
+  public swiper: any;
+  swiperModule = [IonicSlides]
+
+  data: any = {
+    data: {
+      name: '',
+      inactive: false,
+      FeaturedProduct: false,
+
+    },
+    skip: 0,
+    take: 0,
+  };
 
   constructor(public api: ApiService, private loadingCtrl: LoadingController, private router: Router, 
       private activatedRoute: ActivatedRoute, public popoverController: PopoverController, public cep: CepService) {
     
-       this.buscaCep();
   }
 
-  async buscaCep(){
-    
-    
-  }
   
   ngOnInit(): void {
-    this.getDataCategories();
-    this.cart = JSON.parse(localStorage.getItem("cart"));
-    if(this.cart){
-      this.cart.forEach((element: any)  => {
-        this.amountProducts += element.amount;
+    setTimeout(() => {
+      this.getDataCategories();
+      this.cart = JSON.parse(localStorage.getItem("cart"));
+      if(this.cart){
+        this.cart.forEach((element: any)  => {
+          this.amountProducts += element.amount;
+        });
+      }
+      this.client =  JSON.parse(localStorage.getItem("cliente"));
+      this.name = this.client != null && this.client.name != null ? this.client.name : '';
+    }, 500)
+    
+  }
+
+  async buscaProdutos(){
+    const loading = await this.loadingCtrl.create({
+      message: 'Aguarde...',
+    });
+    loading.present();
+    if(this.data.data.Name){
+      
+      this.api.getProductsSearch(this.data).subscribe(data => {
+        loading.dismiss();
+        this.products = data.data;
+      })
+    }
+    else{
+      this.api.getProductsFeatured().subscribe(data => {
+        loading.dismiss();
+        this.products = data.data;
       });
     }
-    this.client =  JSON.parse(localStorage.getItem("cliente"));
-    this.name = this.client != null && this.client.name != null ? this.client.name : '';
+    
   }
 
 

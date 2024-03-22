@@ -86,6 +86,22 @@
 
   --ion-toolbar-background: var(--primary);
   --ion-toolbar-color: white;
+
+
+}
+
+ion-toolbar{
+  --min-height: 120px;
+
+}
+
+swiper-container {
+  --swiper-pagination-bullet-inactive-color: var(--primary);
+  --swiper-pagination-color: var(--primary);
+  --swiper-navigation-color: var(--primary);
+  --swiper-pagination-progressbar-bg-color: var(--primary);
+  --swiper-scrollbar-bg-color: var(--primary);
+  --swiper-scrollbar-drag-bg-color: var(--primary);
 }
 
 /*@media (prefers-color-scheme: dark) {

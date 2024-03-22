@@ -32,7 +32,7 @@
               <img src="../../../assets/images/logo.png" style="width: 125px;">
           </ion-title>
 
-          <ion-buttons slot="secondary" >
+          <ion-buttons slot="end" >
               <ion-row>
                   <ion-col>
                       <ion-button (click)="presentPopover($event)">
@@ -51,7 +51,7 @@
     
 
     <ion-row>
-      <ion-col>
+      <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="6" >
         <ion-row>
           <ion-col  class="descricao">
               <p class="description font">Carrinho de compras</p>
@@ -81,7 +81,7 @@
         </ion-row>
       </ion-col>
 
-      <ion-col>
+      <ion-col size-xs="12" size-sm="6" size-md="6" size-lg="6" >
         <ion-row>
           <ion-col  class="descricao">
             <p class="description font">Dados do Cliente</p>
@@ -160,7 +160,7 @@
       </ion-col>
     </ion-row>
 
-    <ion-row *ngIf="cart && !cepNaoCadastrado">
+    <ion-row *ngIf="cart && !cepNaoCadastrado && addresses.length > 0">
       <ion-col>
         <p class="font" style=" font-size: 20px;">Valor do frete: <span class="font" style="color: var(--primary); font-size: 20px;">{{frete | formatNumber:'currency'}}</span></p>
       </ion-col>

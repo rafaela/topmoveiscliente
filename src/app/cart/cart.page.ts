@@ -76,6 +76,7 @@ export class CartPage implements OnInit {
     this.calculaValorCompra();
     this.getDataCategories();
     this.getData();
+    this.buscaFrete();
   }
 
   menuItemHandler(show: any): void {
@@ -196,11 +197,7 @@ export class CartPage implements OnInit {
       });
     }
 
-    if(!this.payment){
-      this.valor += this.frete;
-    }
     
-   
   }
 
   async getData() {
@@ -240,44 +237,84 @@ export class CartPage implements OnInit {
   }
 
   mudaEndereco(item: any){
+    if(item.enderecoSelecionado){
+      this.enderecoId = item.id;
+      this.calculaValorFrete(item);
+    }
+    else{
+      this.enderecoId = null;
+      this.frete = 0;
+      this.calculaValorFrete(item);
+    }
     this.addresses.forEach((element: any) => {
       if(element.id != item.id){
         element.enderecoSelecionado = false;
+
       }
     });
-    this.calculaValorFrete(item);
+    
+  }
+
+  async buscaFrete(){
+    const loading = await this.loadingCtrl.create({
+      message: 'Aguarde...',
+    });
+    loading.present();
+    this.api.getFreight(this.id).subscribe(data => {
+      loading.dismiss();
+      if(data.sucess){
+        this.dadosfrete = data.data;
+      }
+    });
+      
   }
 
   async calculaValorFrete(item: any){
-    this.enderecoId = item.id;
-    let cep = item.cep.split("-")[0];
-    const loading = await this.loadingCtrl.create({
-      message: 'Aguarde...',
-      });
-      loading.present();
-      this.api.getFreight(this.id).subscribe(data => {
-        loading.dismiss();
-        if(data.sucess){
-          this.dadosfrete = data.data;
-          this.diasEntrega = this.dadosfrete.timeDeliveryDays;
-          if(this.valor >= this.dadosfrete.valuePriceFreeShipping){
-            this.frete = 0;
-            this.calculaValorCompra();
+    if(this.enderecoId == null){
+      this.valor -= this.frete;
+      this.calculaValorCompra();
+    }
+    else{
+      this.cepNaoCadastrado = false;
+      this.calculaValorCompra();
+      let cep = item.cep.split("-")[0];
+      
+      this.diasEntrega = this.dadosfrete.timeDeliveryDays;
+      if(this.dadosfrete.valuePriceFreeShipping != '' && this.dadosfrete.valuePriceFreeShipping > 0){
+        if(this.valor >= this.dadosfrete.valuePriceFreeShipping){
+          this.frete = 0;
+          
+          let index = this.dadosfrete.cities.findIndex((val: any) => val.cep.includes(cep));
+          if(index < 0){
+            this.cepNaoCadastrado = true;
+          }
+        }
+        else{
+          let index = this.dadosfrete.cities.findIndex((val: any) => val.cep.includes(cep));
+          if(index < 0){
+            this.cepNaoCadastrado = true;
           }
           else{
-            let index = this.dadosfrete.cities.findIndex((val: any) => val.cep.includes(cep));
-            if(index < 0){
-              this.cepNaoCadastrado = true;
-            }
-            else{
-              this.cepNaoCadastrado = false;
-              this.frete = this.dadosfrete.cities[index].value;
-              this.calculaValorCompra();
-            }
+            this.cepNaoCadastrado = false;
+            this.frete = this.dadosfrete.cities[index].value;
+            
           }
-          this.calculaValorCompra();
         }
-      });
+      }
+      else{
+        let index = this.dadosfrete.cities.findIndex((val: any) => val.cep.includes(cep));
+        if(index < 0){
+          this.cepNaoCadastrado = true;
+        }
+        else{
+          this.cepNaoCadastrado = false;
+          this.frete = this.dadosfrete.cities[index].value;
+          
+        }
+      }
+      this.valor += this.frete;
+    }
+    
   }
 
   async finalizarCompra(){
@@ -296,6 +333,26 @@ export class CartPage implements OnInit {
         position: 'bottom',
       });
       await toast.present();
+      
+    }
+    else if(this.addresses.length == 0){
+      const toast = await this.toastController.create({
+        message: 'Informe um endereço. Você será direcionado para o cadastro',
+        duration: 1500,
+        position: 'bottom',
+      });
+      await toast.present();
+      this.router.navigateByUrl('cliente',  { replaceUrl: true })
+
+    }
+    else if(this.enderecoId == null){
+      const toast = await this.toastController.create({
+        message: 'Selecione um endereço',
+        duration: 1500,
+        position: 'bottom',
+      });
+      await toast.present();
+
     }
     else{
       this.sale.ClientId = this.id;
@@ -316,7 +373,7 @@ export class CartPage implements OnInit {
       });
     }
     
-    
   }
+  
 
 }
