@@ -43,97 +43,97 @@ export class ApiService {
     return this.http.get(this.apiUrl + '/buscas',category);
   }*/
   getCategories() : Observable<any>{
-    return this.http.post(this.apiUrl + '/categorias', {});
+    return this.http.post(`${this.apiUrl}/categorias`, {});
   }
 
   
   getProducts() : Observable<any>{
-    return this.http.get(this.apiUrl + '/produtos');
+    return this.http.get(`${this.apiUrl}/produtos`);
   }
 
   getProductsFeatured() : Observable<any>{
-    return this.http.get(this.apiUrl + '/produtosdestaque');
+    return this.http.get(`${this.apiUrl}/produtosdestaque`);
   }
 
   
   getProductByID(id: any) :  Observable<any>{
-    return this.http.get(this.apiUrl + '/produtos/' + id, id);
+    return this.http.get(`${this.apiUrl}/produtos/` + id, id);
   }
 
   //CRUD de Clientes
 
   getClientByID(id: any) :  Observable<any>{
-    return this.http.get(this.apiUrl + '/clientes/' + id, id);
+    return this.http.get(`${this.apiUrl}/clientes/` + id, id);
   }
 
   createClient(client: any) :  Observable<any>{
-    return this.http.post(this.apiUrl + '/clientes/0', client);
+    return this.http.post(`${this.apiUrl}/clientes/0`, client);
   }
 
   updateClient(id: any) :  Observable<any>{
-    return this.http.put(this.apiUrl + '/clientes/' + id, id);
+    return this.http.put(`${this.apiUrl}/clientes/` + id, id);
   }
 
   //CRUD de Endereços
 
   createAddress(address: any) :  Observable<any>{
-    return this.http.post(this.apiUrl + '/enderecos/0', address);
+    return this.http.post(`${this.apiUrl}/enderecos/0`, address);
   }
 
   updateAddress(id: any, address: any) :  Observable<any>{
-    return this.http.put(this.apiUrl + '/enderecos/'+ id , address);
+    return this.http.put(`${this.apiUrl}/enderecos/`+ id , address);
   }
 
   deleteAddress(id: any) :  Observable<any>{
-    return this.http.delete(this.apiUrl + '/enderecos/' + id, id);
+    return this.http.delete(`${this.apiUrl}/enderecos/` + id, id);
   }
 
   getAddressByID(id: any) :  Observable<any>{
-    return this.http.get(this.apiUrl + '/enderecos/'+ id, id);
+    return this.http.get(`${this.apiUrl}/enderecos/`+ id, id);
   }
 
   getAddresses(id: any) :  Observable<any>{
-    return this.http.get(this.apiUrl + '/enderecoscliente/' + id, id);
+    return this.http.get(`${this.apiUrl}/enderecoscliente/` + id, id);
   }
 
 
   //Imagens destaque
   getHighlights() : Observable<any>{
-    return this.http.post(this.apiUrl + '/imagensdestaque', {});
+    return this.http.post(`${this.apiUrl}/imagensdestaque`, {});
   }
 
 
   //Formas de pagamento
   getPayments() : Observable<any>{
-    return this.http.post(this.apiUrl + '/pagamentos', {});
+    return this.http.post(`${this.apiUrl}/pagamentos`, {});
   }
 
   getBySubcategory(id: any) : Observable<any>{
-    return this.http.get(this.apiUrl + '/subcategoriaproduto/' + id, id);
+    return this.http.get(`${this.apiUrl}/subcategoriaproduto/` + id, id);
   }
 
   GetByCategory(id: any) : Observable<any>{
-    return this.http.get(this.apiUrl + '/categoriaproduto/' + id, id);
+    return this.http.get(`${this.apiUrl}/categoriaproduto/` + id, id);
   }
 
   createSale(sale: any) :  Observable<any>{
-    return this.http.post(this.apiUrl + '/vendas/0', sale);
+    return this.http.post(`${this.apiUrl}/vendas/0`, sale);
   }
 
   getDataSale(id: any) :  Observable<any>{
-    return this.http.get(this.apiUrl + '/meuspedidos/' + id, id);
+    return this.http.get(`${this.apiUrl}/meuspedidos/` + id, id);
   }
 
   updatePassword(id: any) :  Observable<any>{
-    return this.http.put(this.apiUrl + '/atualizasenha', id);
+    return this.http.put(`${this.apiUrl}/atualizasenha`, id);
   }
 
   getFreight(id: any) :  Observable<any>{
-    return this.http.get(this.apiUrl + '/frete/0', id);
+    return this.http.get(`${this.apiUrl}/frete/0`, id);
   }
   
   getProductsSearch(data: any) : Observable<any>{
-    return this.http.post(this.apiUrl + '/produtos', data);
+    return this.http.post(`${this.apiUrl}/produtos`, data);
   }
 
 }
