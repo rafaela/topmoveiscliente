@@ -184,7 +184,7 @@
 
     <ion-row *ngIf="cart && payment == 5">
       <ion-col col-3>
-        <ion-select class="font" style="width: 190px;" label="Quantidade de Parcelas" label-placement="floating" [(ngModel)]="quantidadeParcelas">
+        <ion-select class="font" style="width: 190px;" label="Quantidade de Parcelas"  okText="OK" cancelText="Cancelar" label-placement="floating" [(ngModel)]="quantidadeParcelas">
           <ion-select-option *ngFor="let item of listaParcelas" value="{{item.ID}}">{{item.Name}}</ion-select-option>
         </ion-select>
       </ion-col>
