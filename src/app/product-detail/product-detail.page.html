@@ -86,12 +86,20 @@
 
                 <p class="description font">Descrição do produto</p>
 
+                <p class="subtitle font">{{product.category.name}}</p>
+
                 <p class="subtitle font" *ngFor="let sub of product.subcategoriesProducts">{{sub.name}}</p>
 
                 <p class="subtitle font">{{product.description}}</p>
 
 
+                <ion-select class="subtitle font" *ngIf="product.colors.length > 0" label="Cor" placeholder="Selecione a cor" okText="OK" cancelText="Cancelar" [(ngModel)]="product.colorId">
+                    <ion-select-option class="subtitle font" *ngFor="let color of product.colors" value="{{color.id}}">{{color.name}}</ion-select-option>
+                </ion-select>
+
                 <p class="description font">Formas de Pagamento</p>
+
+                
 
                 <div *ngFor="let pay of payments">
                     <p class="subtitle font" style="font-size: 15px;" >{{pay.name}}: 
@@ -130,7 +138,7 @@
             </ion-col>
         </ion-row>
 
-        <ion-row *ngIf="products.length > 0">
+        <ion-row>
             <ion-col *ngFor="let product of products">
                 <ion-card (click)="openProduct(product.id)">
                     <img class="imagescard" alt="{{product.name}}" src="{{product.photos[0].urlImage}}" />

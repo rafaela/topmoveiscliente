@@ -60,6 +60,12 @@ export class HomePage implements OnInit{
     
   }
 
+  handleRefresh(event: any) {
+    setTimeout(() => {
+      event.target.complete();
+    }, 2000);
+  }
+
   async buscaProdutos(){
     const loading = await this.loadingCtrl.create({
       message: 'Aguarde...',
@@ -78,7 +84,6 @@ export class HomePage implements OnInit{
         this.products = data.data;
       });
     }
-    
   }
 
 

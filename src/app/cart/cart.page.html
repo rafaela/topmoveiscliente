@@ -65,6 +65,7 @@
           <ion-col size="9">
             <p class="font">{{item.name}}</p>
             <p style="margin-bottom: 1px;">Valor unitário: <span class="valueCart font">{{item.value | formatNumber:'currency'}}</span></p>
+            <p class="font" style="margin-bottom: 1px;" *ngIf="item.color">Cor: {{item.color.name}}</p>
             <ion-input label="Quantidade:" class="inputNumber font" max="99" min="0" type="number" placeholder="000"
                  [(ngModel)]="item.amount" (ngModelChange)="calculaValorCompra()" style="width: 150px;"></ion-input>
             

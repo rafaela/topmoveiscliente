@@ -1,7 +1,7 @@
 import { register } from 'swiper/element/bundle';
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../services/api.service';
-import { AlertController, LoadingController, PopoverController } from '@ionic/angular';
+import { AlertController, LoadingController, PopoverController, ToastController } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PopoverComponent } from '../components/popover/popover.component';
 register();
@@ -39,7 +39,8 @@ export class ProductDetailPage implements OnInit {
 
   constructor(public api: ApiService, private loadingCtrl: LoadingController, 
         private activatedRoute: ActivatedRoute, private router: Router, 
-        private alertController: AlertController, public popoverController: PopoverController) {
+        private alertController: AlertController, public popoverController: PopoverController,
+        private toastController: ToastController) {
   }
 
   
@@ -70,10 +71,9 @@ export class ProductDetailPage implements OnInit {
     });
     loading.present();
     if(this.data.data.Name){
-      
       this.api.getProductsSearch(this.data).subscribe(data => {
-        loading.dismiss();
         this.products = data.data;
+        loading.dismiss();
       })
     }
     else{
@@ -95,6 +95,7 @@ export class ProductDetailPage implements OnInit {
     loading.present();
     this.api.getProductByID(this.id).subscribe(data => {
       this.product = data.data;
+      console.log(this.product)
     });
 
     this.api.getPayments().subscribe(data => {
@@ -161,7 +162,33 @@ export class ProductDetailPage implements OnInit {
     await alert.present();
   }
 
-  adicionarCarrinho(product: any){
+  async validaEscolhaCor(){
+    console.log(this.cart)
+    
+  }
+
+  obtemDadosCor(product: any){
+    this.product.colors.forEach((element: any)  => {
+      if(element.id == product.colorId){
+        this.product.color = element;
+      }
+    });
+  }
+
+  async adicionarCarrinho(product: any){
+    this.obtemDadosCor(product);
+    if(this.product.colors.length > 0){
+      if(!this.product.colorId){
+        const toast = await this.toastController.create({
+          message: 'Selecione a cor',
+          duration: 1500,
+          position: 'bottom',
+        });
+        await toast.present();
+        return;
+      }
+    }
+    
     if(product.amount == 0){
       this.presentAlert("Produto indisponível", product.name);
     }
@@ -175,7 +202,9 @@ export class ProductDetailPage implements OnInit {
           amount: 1,
           value: product.value,
           photo: product.photos[0],
-          name: product.name
+          name: product.name,
+          color: this.product.color,
+          colorId: this.product.color.id
         })
         this.amountProducts++;
       }
@@ -193,7 +222,9 @@ export class ProductDetailPage implements OnInit {
             amount: 1,
             value: product.value,
             photo: product.photos[0],
-            name: product.name
+            name: product.name,
+            color: this.product.color,
+            colorId: this.product.color.id
           })
           this.amountProducts++;
         }
@@ -203,7 +234,20 @@ export class ProductDetailPage implements OnInit {
     localStorage.setItem("cart",  JSON.stringify(this.cart));
   }
 
-  comprarAgora(product: any){
+  async comprarAgora(product: any){
+
+    if(this.product.colors.length > 0){
+      if(!this.product.colorId){
+        const toast = await this.toastController.create({
+          message: 'Selecione a cor',
+          duration: 1500,
+          position: 'bottom',
+        });
+        await toast.present();
+        return;
+      }
+    }
+    
     this.adicionarCarrinho(product);
     
     if(this.name != '')

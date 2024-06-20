@@ -192,6 +192,11 @@ export class ClientPage implements OnInit {
       this.isToastOpen = true;
       save = false;
     }
+    else if(!this.client.login.passwordHash || this.client.login.passwordHash < 6){
+      this.error = 'Informe uma senha de pelo menos 8 caracteres';
+      this.isToastOpen = true;
+      save = false;
+    }
     else{
       this.isToastOpen = false;
       save = true;
