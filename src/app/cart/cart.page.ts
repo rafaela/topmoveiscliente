@@ -73,7 +73,6 @@ export class CartPage implements OnInit {
    */
 
   async filtrar(){
-    console.log(this.cart)
     this.calculaValorCompra();
     this.getDataCategories();
     this.getData();

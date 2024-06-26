@@ -270,23 +270,28 @@ export class ClientPage implements OnInit {
         }
         else{
           this.client = data.data
+          this.id = this.client.id;
+          localStorage.setItem("cliente",JSON.stringify(this.client) )
           if(!this.isEdit){
             this.isEdit = true;
+            
             this.openModal()
           }
-
-          if(localStorage.getItem("tela") == "cliente"){
-            this.router.navigateByUrl('home',  { replaceUrl: true })
-          }
-          else if(localStorage.getItem("tela") == "carrinho"){
-            this.router.navigateByUrl('carrinho',  { replaceUrl: true })
-          }
-          else if(localStorage.getItem("tela") == "meuspedidos"){
-            this.router.navigateByUrl('meuspedidos',  { replaceUrl: true })
-          }
           else{
-            this.router.navigateByUrl('home',  { replaceUrl: true })
+            if(localStorage.getItem("tela") == "cliente"){
+              this.router.navigateByUrl('home',  { replaceUrl: true })
+            }
+            else if(localStorage.getItem("tela") == "carrinho"){
+              this.router.navigateByUrl('carrinho',  { replaceUrl: true })
+            }
+            else if(localStorage.getItem("tela") == "meuspedidos"){
+              this.router.navigateByUrl('meuspedidos',  { replaceUrl: true })
+            }
+            else{
+              this.router.navigateByUrl('home',  { replaceUrl: true })
+            }
           }
+          
         }
       });
       
@@ -304,8 +309,9 @@ export class ClientPage implements OnInit {
     if (role === 'confirm') {
       
       if(data){
-        this.searchAddresses();
+        await this.searchAddresses();
       }
+      
     }
   }
 

@@ -95,7 +95,6 @@ export class ProductDetailPage implements OnInit {
     loading.present();
     this.api.getProductByID(this.id).subscribe(data => {
       this.product = data.data;
-      console.log(this.product)
     });
 
     this.api.getPayments().subscribe(data => {
@@ -162,10 +161,6 @@ export class ProductDetailPage implements OnInit {
     await alert.present();
   }
 
-  async validaEscolhaCor(){
-    console.log(this.cart)
-    
-  }
 
   obtemDadosCor(product: any){
     this.product.colors.forEach((element: any)  => {
@@ -204,7 +199,7 @@ export class ProductDetailPage implements OnInit {
           photo: product.photos[0],
           name: product.name,
           color: this.product.color,
-          colorId: this.product.color.id
+          colorId: this.product.color != null ?  this.product.color.id : null
         })
         this.amountProducts++;
       }

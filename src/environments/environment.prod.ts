@@ -1,3 +1,3 @@
 export const environment = {
-    ApiUrl:  "apitopmoveis.azurewebsites.net"
+    ApiUrl: "https://api.topmoveislamim.com.br"
 };

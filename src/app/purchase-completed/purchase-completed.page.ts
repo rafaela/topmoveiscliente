@@ -33,7 +33,7 @@ export class PurchaseCompletedPage implements OnInit {
     this.client =  JSON.parse(localStorage.getItem("cliente"));
     this.name = this.client != null && this.client.name != null ? this.client.name : '';
 
-    this.pag.obtendoAccessToken();
+    //this.pag.obtendoAccessToken();
   }
 
   menuItemHandler(show: any): void {
