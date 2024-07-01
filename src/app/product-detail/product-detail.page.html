@@ -92,10 +92,21 @@
 
                 <p class="subtitle font">{{product.description}}</p>
 
+                <ion-row>
+                    <ion-col  size="3" *ngFor="let color of product.colors">
+                        <button *ngIf="color.amount > 0 && color.botaoSelecionado" 
+                                style="border: 1px solid  var(--primary);" class="btn-image"(click)="changeImageSelected(color)">
+                            <img src="{{color.urlImage}}" class="image-btn">
+                            <span class="subtitle font ">{{color.name}}</span>
+                        </button>
 
-                <ion-select class="subtitle font" *ngIf="product.colors.length > 0" label="Cor" placeholder="Selecione a cor" okText="OK" cancelText="Cancelar" [(ngModel)]="product.colorId">
-                    <ion-select-option class="subtitle font" *ngFor="let color of product.colors" value="{{color.id}}">{{color.name}}</ion-select-option>
-                </ion-select>
+                        <button *ngIf="color.amount > 0 && !color.botaoSelecionado" 
+                             style="border: none" class="btn-image"(click)="changeImageSelected(color)">
+                            <img src="{{color.urlImage}}" class="image-btn">
+                            <span class="subtitle font ">{{color.name}}</span>
+                        </button>
+                    </ion-col>
+                </ion-row>
 
                 <p class="description font">Formas de Pagamento</p>
 

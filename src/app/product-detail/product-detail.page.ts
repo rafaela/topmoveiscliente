@@ -36,7 +36,6 @@ export class ProductDetailPage implements OnInit {
     take: 0,
   };
 
-
   constructor(public api: ApiService, private loadingCtrl: LoadingController, 
         private activatedRoute: ActivatedRoute, private router: Router, 
         private alertController: AlertController, public popoverController: PopoverController,
@@ -95,6 +94,10 @@ export class ProductDetailPage implements OnInit {
     loading.present();
     this.api.getProductByID(this.id).subscribe(data => {
       this.product = data.data;
+
+      this.product.colors.forEach((element : any) => {
+        element.botaoSelecionado = false;
+      });
     });
 
     this.api.getPayments().subscribe(data => {
@@ -167,6 +170,18 @@ export class ProductDetailPage implements OnInit {
       if(element.id == product.colorId){
         this.product.color = element;
       }
+    });
+  }
+
+  changeImageSelected(color: any){
+    this.product.color = color;
+    this.product.colorId = color.id;
+
+    this.product.colors.forEach((element : any) => {
+      if(element.id == color.id)
+        element.botaoSelecionado = true;
+      else
+        element.botaoSelecionado = false;
     });
   }
 
