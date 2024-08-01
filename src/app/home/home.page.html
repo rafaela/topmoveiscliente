@@ -67,7 +67,7 @@
         </ion-row>
 
         <ion-row *ngIf="highligths.length > 0">
-            <ion-col sizeLg="12" sizeMd="12" sizeXs="12"  style="height: 400px;">
+            <ion-col style="height: 500px !important;">
                 <ion-content class="slides">
                     <swiper-container [modules]="swiperModule" [autoPlay]="true" [loop]="true" [pagination]="true" navigation="true">
                         <swiper-slide class="swiperSlide" *ngFor="let high of highligths">

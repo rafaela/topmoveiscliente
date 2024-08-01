@@ -4,6 +4,7 @@ import { ApiService } from '../services/api.service';
 import { AlertController, LoadingController, PopoverController, ToastController } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PopoverComponent } from '../components/popover/popover.component';
+import { Browser } from '@capacitor/browser';
 register();
 
 @Component({
@@ -87,6 +88,15 @@ export class ProductDetailPage implements OnInit {
     this.detalhesProduto();
   }
 
+  openWhatsApp() {
+    const phoneNumber = '5531983183436'; // Substitua pelo número desejado
+    const message = 'Olá! Gostaria de saber mais informações sobre o produto: ' + this.api.frontUrl + this.id; // Sua mensagem padrão
+    console.log(message)
+    const encodedMessage = encodeURIComponent(message);
+    Browser.open({ url: `https://wa.me/${phoneNumber}?text=${encodedMessage}` });
+
+  }
+
   async detalhesProduto(){
     const loading = await this.loadingCtrl.create({
       message: 'Aguarde...',
@@ -94,10 +104,12 @@ export class ProductDetailPage implements OnInit {
     loading.present();
     this.api.getProductByID(this.id).subscribe(data => {
       this.product = data.data;
-
-      this.product.colors.forEach((element : any) => {
-        element.botaoSelecionado = false;
-      });
+      if(this.product){
+        this.product.colors.forEach((element : any) => {
+          element.botaoSelecionado = false;
+        });
+      }
+      
     });
 
     this.api.getPayments().subscribe(data => {

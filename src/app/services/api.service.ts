@@ -12,6 +12,7 @@ export class ApiService {
 
   public intlMaskProps: IntlMaskProperties = { locales: 'pt-BR', options: { style: 'currency', currency: 'BRL' } };
   private apiUrl = '';
+  public frontUrl = 'https://topmoveislamim.com.br/detalhe/'
   private log: boolean = false;
 
   result: any;

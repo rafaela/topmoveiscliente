@@ -57,9 +57,17 @@
     </ion-header>
 
 
+    <ion-content *ngIf="!product">
+        <ion-row>
+            <ion-col  class="descricao">
+                <p class="font">Produto não encontrado!</p>
+            </ion-col>
+        </ion-row>
+    </ion-content>
     
 
     <ion-content class="ion-padding " *ngIf="product">
+        
 
         <ion-row>
             <ion-col class="colBusca">
@@ -69,8 +77,8 @@
         </ion-row>
 
         <ion-row *ngIf="products.length == 0">
-            <ion-col sizeLg="6" sizeMd="6" sizeXs="12" >
-
+            <ion-col sizeLg="6" sizeMd="6" sizeXs="12" style="height: 500px !important;">
+                
                 <p class="title">{{product.name}}</p>
                 <p class="value">{{product.value | formatNumber:'currency'}}</p>
                 <ion-content class="slides">   
@@ -92,8 +100,8 @@
 
                 <p class="subtitle font">{{product.description}}</p>
 
-                <ion-row>
-                    <ion-col  size="3" *ngFor="let color of product.colors">
+                <ion-row size="3" *ngFor="let color of product.colors">
+                    <ion-col  >
                         <button *ngIf="color.amount > 0 && color.botaoSelecionado" 
                                 style="border: 1px solid  var(--primary);" class="btn-image"(click)="changeImageSelected(color)">
                             <img src="{{color.urlImage}}" class="image-btn">
@@ -134,17 +142,23 @@
                 
 
 
-                <p>
+                <p *ngIf="product.amount > 0">
                     <ion-button class="font" expand="block" shape="round" (click)="comprarAgora(product)">
                         <ion-icon name="bag-check-outline"  style="margin-right: 5px;"></ion-icon>
                         Comprar agora</ion-button>
                 </p>
                 
-                <p>
+                <p *ngIf="product.amount > 0">
                     
                     <ion-button class="font" expand="block" shape="round" (click)="adicionarCarrinho(product)">
                         <ion-icon name="cart-outline" style="margin-right: 5px;"></ion-icon>
                         Adicionar ao carrinho</ion-button>
+                </p>
+
+                <p>
+                    <ion-button class="font" expand="block" shape="round" (click)="openWhatsApp()">
+                        <ion-icon name="logo-whatsapp" style="margin-right: 5px;"></ion-icon>
+                        Conversar no WhatsApp</ion-button>
                 </p>
             </ion-col>
         </ion-row>
