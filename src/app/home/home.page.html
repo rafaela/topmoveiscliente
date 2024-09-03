@@ -66,23 +66,16 @@
             </ion-col>
         </ion-row>
 
-        <ion-row *ngIf="highligths.length > 0">
-            <ion-col style="height: 500px !important;">
-                <ion-content class="slides">
-                    <swiper-container [modules]="swiperModule" [autoPlay]="true" [loop]="true" [pagination]="true" navigation="true">
-                        <swiper-slide class="swiperSlide" *ngFor="let high of highligths">
-                            <img src="{{high.image}}" alt="{{high.name}}">
-                        </swiper-slide>
-                        
-                    </swiper-container>
-                </ion-content>
-            </ion-col>
-        </ion-row>
+        <div *ngIf="highligths.length > 0" style="margin-top: 40px;">
+            <swiper-container [modules]="swiperModule" [autoPlay]="true" [loop]="true" [pagination]="true" navigation="true">
+                <swiper-slide class="swiperSlide" *ngFor="let high of highligths">
+                    <img src="{{high.image}}" alt="{{high.name}}">
+                </swiper-slide>
+                
+            </swiper-container>
+        </div>
         
-
-        
-
-        <ion-row>
+        <ion-row style="margin-top: 40px;">
             <ion-col *ngFor="let product of products">
                 <app-card-product imageProduct="{{product.photos[0].urlImage}}" (click)="openProduct(product.id)" nameProduct="{{product.name}}" valueProduct="{{product.value | formatNumber:'currency'}}" ></app-card-product>
             </ion-col>
