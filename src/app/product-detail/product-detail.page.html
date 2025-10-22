@@ -40,12 +40,7 @@
                         </ion-button>
                     </ion-col>
 
-                    <ion-col>
-                        <ion-button style="margin-right: 15px;" (click)="viewCart()">
-                            <ion-icon class="icon-navbar" slot="icon-only" name="cart-outline"></ion-icon>
-                            <ion-badge  *ngIf="amountProducts > 0" color="primary">{{amountProducts}}</ion-badge>
-                        </ion-button>
-                    </ion-col>
+                
                 </ion-row>
                 <!-- <ion-searchbar placeholder="Buscar produtos" style="width: 600px;"></ion-searchbar> -->
                 
@@ -80,7 +75,6 @@
             <ion-col sizeLg="6" sizeMd="6" sizeXs="12" style="height: 500px !important;">
                 
                 <p class="title">{{product.name}}</p>
-                <p class="value">{{product.value | formatNumber:'currency'}}</p>
                 <ion-content class="slides">   
                     <swiper-container  wiper-container [loop]="true" [pagination]="true" navigation="true">
                         <swiper-slide *ngFor="let photo of product.photos">
@@ -120,31 +114,6 @@
                     </ion-col>
                 </ion-row>
 
-                <p class="description font">Formas de Pagamento</p>
-
-                
-
-                <div *ngFor="let pay of payments">
-                    <p class="subtitle font" style="font-size: 15px;" >{{pay.name}}: 
-                        <span *ngIf="pay.methods == 1 && pay.discount == null">{{product.value | formatNumber:'currency'}}</span>
-
-                        <span *ngIf="pay.methods == 2 && pay.discount == null">{{product.value | formatNumber:'currency'}}</span>
-
-                        <span *ngIf="pay.methods == 3 && pay.discount != null">{{product.value - ((pay.discount/100) * product.value) | formatNumber:'currency'}}</span>
-                        <span *ngIf="pay.methods == 3 && pay.discount == null">{{product.value | formatNumber:'currency'}}</span>
-
-                        <span *ngIf="pay.methods == 4 && pay.discount != null">{{product.value - ((pay.discount/100) * product.value) | formatNumber:'currency'}}</span>
-                        <span *ngIf="pay.methods == 4 && pay.discount == null">{{product.value | formatNumber:'currency'}}</span>
-
-                        <span *ngIf="pay.methods == 5 && pay.fees != null">{{product.value + ((pay.fees/100) * product.value) | formatNumber:'currency'}} em até 
-                            {{pay.quantityInstallments}} de {{(product.value + ((pay.fees/100) * product.value))  / pay.quantityInstallments  | formatNumber:'currency'}}</span>
-                        <span *ngIf="pay.methods == 5 && pay.fees == null">
-                            {{product.value | formatNumber:'currency'}} em até   {{pay.quantityInstallments}} de {{product.value / pay.quantityInstallments  | formatNumber:'currency'}}</span>
-                    </p>
-                    
-                </div >
-                
-
 
                 <p *ngIf="product.amount > 0">
                     <ion-button class="font" expand="block" shape="round" (click)="comprarAgora(product)">
@@ -173,7 +142,6 @@
                     <img class="imagescard" alt="{{product.name}}" src="{{product.photos[0].urlImage}}" />
                     <ion-card-header>
                       <ion-card-title>{{product.name}}</ion-card-title>
-                      <ion-card-subtitle class="valuecard">{{product.value | formatNumber:'currency'}}</ion-card-subtitle>
                     </ion-card-header>
                   </ion-card>
             </ion-col>

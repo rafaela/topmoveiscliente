@@ -42,12 +42,6 @@
                   </ion-button>
               </ion-col>
 
-              <ion-col *ngIf="isEdit">
-                  <ion-button   style="margin-right: 15px;" (click)="viewCart()">
-                      <ion-icon class="icon-navbar" slot="icon-only" name="cart-outline"></ion-icon>
-                      <ion-badge  *ngIf="amountProducts > 0" color="primary">{{amountProducts}}</ion-badge>
-                  </ion-button>
-              </ion-col>
           </ion-row>
           <!-- <ion-searchbar placeholder="Buscar produtos" style="width: 600px;"></ion-searchbar> -->
           

@@ -37,12 +37,7 @@
                   </ion-button>
               </ion-col>
 
-              <ion-col>
-                  <ion-button style="margin-right: 15px;" (click)="viewCart()">
-                      <ion-icon class="icon-navbar" slot="icon-only" name="cart-outline"></ion-icon>
-                      <ion-badge  *ngIf="amountProducts > 0" color="primary">{{amountProducts}}</ion-badge>
-                  </ion-button>
-              </ion-col>
+              
           </ion-row>
       </ion-buttons>
 
@@ -94,7 +89,6 @@
             </ion-col>
             <ion-col size="5">
                 <p class="font">{{product.name}}</p>
-                <p style="margin-bottom: 1px;">Valor unitário: <span class="valueCart font">{{product.value | formatNumber:'currency'}}</span></p>
                 <p class="font">Quantidade: {{product.amount}}</p>
             </ion-col>
          

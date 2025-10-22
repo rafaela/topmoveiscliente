@@ -43,12 +43,12 @@
                     </ion-button>
                 </ion-col>
 
-                <ion-col>
+                <!-- <ion-col>
                     <ion-button style="margin-right: 15px;" (click)="viewCart()">
                         <ion-icon class="icon-navbar" slot="icon-only" name="cart-outline"></ion-icon>
                         <ion-badge  *ngIf="amountProducts > 0" color="primary">{{amountProducts}}</ion-badge>
                     </ion-button>
-                </ion-col>
+                </ion-col> -->
             </ion-row>
             <!-- <ion-searchbar placeholder="Buscar produtos" style="width: 600px;"></ion-searchbar> -->
             
@@ -77,7 +77,7 @@
         
         <ion-row style="margin-top: 40px;">
             <ion-col *ngFor="let product of products">
-                <app-card-product imageProduct="{{product.photos[0].urlImage}}" (click)="openProduct(product.id)" nameProduct="{{product.name}}" valueProduct="{{product.value | formatNumber:'currency'}}" ></app-card-product>
+                <app-card-product imageProduct="{{product.photos[0].urlImage}}" (click)="openProduct(product.id)" nameProduct="{{product.name}}" ></app-card-product>
             </ion-col>
 
             <ion-col *ngIf="products.length == 0">

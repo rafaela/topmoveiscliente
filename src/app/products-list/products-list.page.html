@@ -39,12 +39,7 @@
                     </ion-button>
                 </ion-col>
 
-                <ion-col>
-                    <ion-button style="margin-right: 15px;" (click)="viewCart()">
-                        <ion-icon class="icon-navbar" slot="icon-only" name="cart-outline"></ion-icon>
-                        <ion-badge  *ngIf="amountProducts > 0" color="primary">{{amountProducts}}</ion-badge>
-                    </ion-button>
-                </ion-col>
+                
             </ion-row>
         </ion-buttons>
 
@@ -69,7 +64,6 @@
                 <img *ngIf="product.photos" class="images" alt="{{product.name}}" src="{{product.photos[0].urlImage}}" />
                 <ion-card-header>
                   <ion-card-title>{{product.name}}</ion-card-title>
-                  <ion-card-subtitle class="value">{{product.value | formatNumber:'currency'}}</ion-card-subtitle>
                 </ion-card-header>
               </ion-card>
         </ion-col>
